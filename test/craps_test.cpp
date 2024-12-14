@@ -88,3 +88,36 @@ TEST_CASE("Question 3, shooter checker"){
 		std::cout << roll_value << "\n";
 	}
 }
+
+// Come out and Points tests (Q4)
+
+#include "come_out_phase.h"
+
+TEST_CASE("ComeOutPhase get_outcome tests"){
+	Die die1;
+	Die die2;
+	ComeOutPhase comeOutPhase;
+
+	Roll roll(die1,die2);
+
+	for (int i = 0; i < 10; ++i) {
+        roll.roll_dice();
+        int rolled_value = roll.roll_value();
+
+        RollOutcome outcome = comeOutPhase.get_outcome(&roll);
+
+        std::cout << "Rolled value: " << rolled_value << ", Outcome: ";
+
+        if (outcome == RollOutcome::natural) {
+            std::cout << "natural\n";
+            REQUIRE((rolled_value == 7 || rolled_value == 11));
+        } else if (outcome == RollOutcome::craps) {
+            std::cout << "craps\n";
+            REQUIRE((rolled_value == 2 || rolled_value == 3 || rolled_value == 12));
+        } else if (outcome == RollOutcome::point) {
+            std::cout << "point\n";
+            REQUIRE((rolled_value == 4 || rolled_value == 5 || rolled_value == 6 || 
+                     rolled_value == 8 || rolled_value == 9 || rolled_value == 10));
+        }
+    }
+}
