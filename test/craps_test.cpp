@@ -5,6 +5,8 @@ TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
 }
 
+
+
 // Die tests (Q1)
 #include "die.h"
 
@@ -28,6 +30,8 @@ TEST_CASE("Display the numbers 10 times in the correct range"){
 		std::cout << rollResult << "\n";
 	}
 }
+
+
 
 // Roll's tests (Q2)
 #include "roll.h"
@@ -57,5 +61,30 @@ TEST_CASE("10 times two dices"){
 		REQUIRE((Ddices >= 2 && Ddices <= 12));
 
 		std::cout << Ddices << "\n";
+	}
+}
+
+
+
+// Shooters test (Q3)
+#include "shooter.h"
+
+
+TEST_CASE("Question 3, shooter checker"){
+	std:: cout << "Manual lookup (Roll (Q3)): " << "\n";
+
+	Die die1;
+	Die die2;
+
+	Shooter shooter;	
+	for (int i = 0; i < 10; i++){
+		
+
+		Roll* roll = shooter.throw_dice(die1, die2);
+		int roll_value = roll->roll_value();
+
+		REQUIRE((roll_value >= 2 && roll_value <= 12));
+
+		std::cout << roll_value << "\n";
 	}
 }
