@@ -89,15 +89,19 @@ TEST_CASE("Question 3, shooter checker"){
 	}
 }
 
+
+
 // Come out and Points tests (Q4)
 
+
+// Come out
 #include "come_out_phase.h"
 
-TEST_CASE("ComeOutPhase get_outcome tests"){
+TEST_CASE("ComeOutPhase get_outcome tests (Q4, a)"){
 	Die die1;
 	Die die2;
 	ComeOutPhase comeOutPhase;
-
+	std::cout << "\nCome out phase test\n";
 	Roll roll(die1,die2);
 
 	for (int i = 0; i < 10; ++i) {
@@ -120,4 +124,40 @@ TEST_CASE("ComeOutPhase get_outcome tests"){
                      rolled_value == 8 || rolled_value == 9 || rolled_value == 10));
         }
     }
+}
+
+// PointPhase
+
+#include "point_phase.h"
+
+TEST_CASE("Point phase check (Q4, b)"){
+	Die die1;
+	Die die2;
+
+	int point_value = 0;
+	std::cout << "\nPoint phase test\n";
+	PointPhase pointPhase(point_value);
+
+	for (int i = 0; i < 10; i++){
+		Roll roll(die1,die2);
+		roll.roll_dice();
+		int rolled_value = roll.roll_value();
+
+		RollOutcome outcome = pointPhase.get_outcome(&roll);
+
+		std::cout << "Rolled value: " << rolled_value << ", Outcome: ";
+
+		if (outcome == RollOutcome::point) {
+			std::cout << "Point\n";
+			REQUIRE(rolled_value == point_value);
+		}
+		else if (outcome == RollOutcome::seven_out){
+			std::cout << "seven_out\n";
+			REQUIRE(rolled_value == 7);
+		}
+		else if (outcome == RollOutcome::nopoint){
+			std::cout << "nopoint\n";
+			REQUIRE((rolled_value != point_value && rolled_value != 7));
+		}
+	}
 }
